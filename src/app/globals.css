@@ -1,0 +1,86 @@
+@import "tailwindcss";
+
+/* Google Fonts: Playfair Display (headings, serif) + Albert Sans (body). */
+@import url("https://fonts.googleapis.com/css2?family=Albert+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600&display=swap");
+
+/*
+  Karl Konsult International - design system
+  Theme: Deep emerald + cream (light page, one deep-pine block for contrast).
+  Accent locked across the whole page: emerald primary, muted gold micro-accent.
+  Radius lock: cards 20px, buttons full pill.
+  Type: Clash Display (display) + Satoshi (body).
+*/
+
+@theme {
+  /*
+    Theme: Burgundy + cream.
+    NOTE: token scale is named `emerald` for historical reasons, but the VALUES
+    are burgundy/wine. `pine` = wine-ink text, `bone` = warm cream, `gold` = accent.
+  */
+  --color-emerald-50: #fbf1f2;
+  --color-emerald-100: #f5dde0;
+  --color-emerald-200: #e6b6bd;
+  --color-emerald-400: #a8475a;
+  --color-emerald-500: #8e3144;
+  --color-emerald-600: #7a2233;
+  --color-emerald-700: #611826;
+  --color-emerald-800: #4a111d;
+
+  --color-gold-300: #e0c07a;
+  --color-gold-400: #c19a4b;
+  --color-gold-500: #a87f36;
+
+  --color-pine-700: #4a2228;
+  --color-pine-800: #2a1418;
+  --color-pine-900: #1c0d11;
+
+  --color-bone: #fbf6f0;
+  --color-bone-deep: #f3e9df;
+
+  --font-display: "Playfair Display", ui-serif, Georgia, serif;
+  --font-sans: "Albert Sans", ui-sans-serif, system-ui, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-bone);
+  color: var(--color-pine-800);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+/* Continuous marquee for the destinations strip */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.animate-marquee {
+  animation: marquee 40s linear infinite;
+}
+.marquee-mask {
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent);
+}
+
+/* Subtle paper grain on hero, fixed + pointer-events-none for perf */
+.grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.4;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .animate-marquee { animation: none; }
+}
