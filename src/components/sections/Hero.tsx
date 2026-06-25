@@ -21,7 +21,7 @@ const rail = [
   { value: "16", label: "years guiding" },
 ];
 
-const flagStrip = ["ca", "gb", "au", "de", "ie", "us"];
+const flagStrip = ["au", "gb", "us", "de", "fr", "nz"];
 
 export function Hero() {
   const reduce = useReducedMotion();
@@ -51,18 +51,16 @@ export function Hero() {
             className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-bold text-emerald-700 shadow-sm ring-1 ring-emerald-100"
           >
             <Sparkle size={15} weight="fill" className="text-gold-500" />
-            Overseas education, since 2009
+            Trusted study abroad consultants in Jaipur, since 2009
           </motion.div>
 
           <motion.h1
             {...rise(0.08)}
-            className="mt-6 font-display text-[2.4rem] font-bold leading-[1.04] tracking-tight text-pine-900 sm:text-6xl lg:text-[5rem]"
+            className="mt-6 font-display text-[2.15rem] font-bold leading-[1.06] tracking-tight text-pine-900 sm:text-5xl lg:text-[3.9rem]"
           >
-            Study abroad,
-            <br />
-            made{" "}
+            Study abroad with{" "}
             <span className="relative inline-block text-emerald-600">
-              simple
+              confidence
               <svg
                 aria-hidden
                 viewBox="0 0 200 16"
@@ -79,20 +77,26 @@ export function Hero() {
               </svg>
             </span>
             .
+            <br />
+            From university selection to visa approval.
           </motion.h1>
 
           <motion.p
             {...rise(0.16)}
-            className="mt-7 max-w-[46ch] text-lg leading-relaxed text-pine-700"
+            className="mt-7 max-w-[48ch] text-lg leading-relaxed text-pine-700"
           >
-            From the first shortlist to the visa stamp, we place students at universities
-            they are proud of, with advice that puts the outcome first.
+            Dreaming of studying in the UK, Canada, Australia or Europe? We&apos;re with
+            you at every step — choosing the right course, prepping for IELTS or PTE,
+            applying for scholarships and getting your student visa approved.
           </motion.p>
 
-          <motion.div {...rise(0.24)} className="mt-9 flex flex-wrap items-center gap-4">
+          <motion.div {...rise(0.24)} className="mt-9 flex flex-wrap items-center gap-3 sm:gap-4">
             <EnquiryButton size="lg">
               Book free counselling
               <ArrowRight size={18} weight="bold" />
+            </EnquiryButton>
+            <EnquiryButton variant="ghost" size="lg">
+              Check eligibility
             </EnquiryButton>
             <Button href="#destinations" variant="outline" size="lg">
               Explore destinations
@@ -118,7 +122,7 @@ export function Hero() {
                   </span>
                 ))}
               </div>
-              <span className="text-sm font-semibold text-pine-700">8 countries</span>
+              <span className="text-sm font-semibold text-pine-700">9 study destinations</span>
             </div>
 
             <div className="flex items-center gap-2">
@@ -145,15 +149,15 @@ export function Hero() {
           <div className="absolute -right-6 -top-6 -z-0 h-44 w-44 blob bg-gold-300/60 blur-2xl" />
           <div className="absolute -bottom-10 -left-8 -z-0 h-48 w-48 blob bg-coral-300/50 blur-2xl" />
 
-          {/* the framed clay scene */}
+          {/* real student photo */}
           <div className="relative animate-floaty-slow overflow-hidden rounded-[2.5rem] ring-4 ring-white shadow-[0_40px_80px_-32px_rgba(21,35,63,0.45)]">
             <Image
-              src="/hero.png"
-              alt="A student with a graduation cap and backpack surrounded by world landmarks"
-              width={1402}
-              height={1122}
+              src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1200&q=75"
+              alt="Happy international student celebrating their university admission and study abroad visa"
+              width={1200}
+              height={1100}
               priority
-              className="h-auto w-full"
+              className="aspect-[12/11] h-auto w-full object-cover"
             />
           </div>
 

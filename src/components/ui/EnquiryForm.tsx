@@ -2,11 +2,9 @@
 
 import { useState } from "react";
 import { CheckCircle, CircleNotch } from "@phosphor-icons/react";
+import { destinations as DEST } from "@/lib/data";
 
-const destinations = [
-  "Canada", "United Kingdom", "Australia", "Germany",
-  "Ireland", "United States", "New Zealand", "France",
-];
+const destinations = DEST.map((d) => d.name);
 
 const qualifications = [
   "Class 12 / High School",
@@ -14,6 +12,24 @@ const qualifications = [
   "Bachelor's degree",
   "Master's degree",
   "Other",
+];
+
+const intakeOptions = [
+  "As soon as possible",
+  "Sep / Oct 2026",
+  "Jan / Feb 2027",
+  "May / Jul 2027",
+  "2027 onwards",
+  "Just exploring",
+];
+
+const scoreOptions = [
+  "Not taken yet",
+  "IELTS 5.5 – 6.0",
+  "IELTS 6.5+",
+  "PTE 50 – 64",
+  "PTE 65+",
+  "Duolingo / Other",
 ];
 
 type Status = "idle" | "loading" | "done";
@@ -105,6 +121,12 @@ export function EnquiryForm({ compact = false }: { compact?: boolean }) {
         <Field label="Name of degree / course" htmlFor="degree">
           <input id="degree" name="degree" type="text" placeholder="e.g. B.Tech CSE" className={inputBase} />
         </Field>
+        <Field label="Current city" htmlFor="city">
+          <input id="city" name="city" type="text" placeholder="e.g. Jaipur" className={inputBase} />
+        </Field>
+      </div>
+
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <Field label="Preferred destination" htmlFor="destination">
           <select id="destination" name="destination" defaultValue="" className={inputBase}>
             <option value="" disabled>Select</option>
@@ -113,7 +135,24 @@ export function EnquiryForm({ compact = false }: { compact?: boolean }) {
             ))}
           </select>
         </Field>
+        <Field label="Preferred intake" htmlFor="intake">
+          <select id="intake" name="intake" defaultValue="" className={inputBase}>
+            <option value="" disabled>Select</option>
+            {intakeOptions.map((d) => (
+              <option key={d} value={d}>{d}</option>
+            ))}
+          </select>
+        </Field>
       </div>
+
+      <Field label="IELTS / PTE score (if available)" htmlFor="score">
+        <select id="score" name="score" defaultValue="" className={inputBase}>
+          <option value="" disabled>Select</option>
+          {scoreOptions.map((d) => (
+            <option key={d} value={d}>{d}</option>
+          ))}
+        </select>
+      </Field>
 
       <Field label="Your message" htmlFor="message">
         <textarea

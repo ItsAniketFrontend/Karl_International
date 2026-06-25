@@ -53,26 +53,26 @@ const posts = [
 
 export function Insights() {
   return (
-    <section id="insights" className="relative overflow-hidden bg-bone py-14 sm:py-16 lg:py-24">
+    <section id="blogs" className="relative overflow-hidden bg-bone py-14 sm:py-16 lg:py-24">
       <div className="pointer-events-none absolute -right-32 top-24 -z-0 h-96 w-96 rounded-full bg-emerald-100/40 blur-3xl" />
 
       <div className="relative mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-8">
         <Reveal className="flex flex-wrap items-end justify-between gap-4">
           <div className="max-w-2xl">
             <span className="inline-flex items-center gap-2 rounded-full bg-emerald-50 px-4 py-1.5 text-sm font-semibold text-emerald-700">
-              Guides &amp; insights
+              Blogs &amp; guides
             </span>
             <h2 className="mt-4 font-display text-[2rem] font-bold leading-[1.08] tracking-tight text-pine-900 sm:text-4xl md:text-[3.4rem]">
               Read before you{" "}
               <span className="text-emerald-600">apply</span>
             </h2>
             <p className="mt-4 max-w-xl text-lg text-pine-700/75">
-              Plain-language guides on intakes, visas and funding, updated the moment
-              the rules change.
+              Plain-language guides on study abroad intakes, student visas, scholarships
+              and funding — updated the moment the rules change.
             </p>
           </div>
           <Link
-            href="#insights"
+            href="#blogs"
             className="group inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-white px-5 py-2.5 text-sm font-semibold text-emerald-700 transition-all hover:-translate-y-0.5 hover:border-emerald-600"
           >
             View all guides

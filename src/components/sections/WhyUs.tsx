@@ -20,31 +20,33 @@ export function WhyUs() {
 
           <div className="relative overflow-hidden rounded-[36px] ring-4 ring-white shadow-[0_30px_60px_-28px_rgba(21,35,63,0.4)]">
             <Image
-              src="/who_we_are.png"
-              alt="A Karl Konsult counsellor reviewing university options with a student"
+              src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1100&q=75"
+              alt="A Karl Konsult counsellor guiding a student through university and visa options"
               width={1100}
               height={1000}
               className="h-[460px] w-full object-cover"
             />
           </div>
           <div className="absolute -right-4 -top-4 hidden rounded-2xl bg-gold-400 px-5 py-4 shadow-[0_16px_30px_-12px_rgba(255,198,46,0.7)] sm:block">
-            <p className="text-2xl font-extrabold leading-none text-pine-900">No. 1</p>
-            <p className="mt-1 text-xs font-semibold text-pine-800">Rated counselling, Rajasthan</p>
+            <p className="text-2xl font-extrabold leading-none text-pine-900">98%</p>
+            <p className="mt-1 text-xs font-semibold text-pine-800">Student visa success rate</p>
           </div>
         </Reveal>
 
         <div className="order-1 lg:order-2">
           <Reveal>
             <span className="inline-flex items-center gap-2 rounded-full bg-emerald-50 px-4 py-1.5 text-sm font-semibold text-emerald-700">
-              Why Karl Konsult
+              Why Karl Konsult International?
             </span>
             <h2 className="mt-4 font-display text-4xl font-bold leading-[1.05] tracking-tight text-pine-900 md:text-[2.95rem]">
-              Guidance built on outcomes, not commissions
+              Honest guidance that puts your success first
             </h2>
             <p className="mt-5 text-lg leading-relaxed text-pine-700/85">
-              We are counsellors first. Every shortlist is built around your scores,
-              budget and ambitions, then backed by a team that has handled thousands
-              of applications and visas. You always know the real next step.
+              Choosing where to study is one of the biggest decisions you&apos;ll ever
+              make — and you shouldn&apos;t make it alone. Our counsellors build every
+              plan around <strong>your</strong> scores, budget and goals, explain each
+              step in plain language, and stay with you from your first question to your
+              first day on campus. Transparent advice, real support, no surprises.
             </p>
           </Reveal>
 

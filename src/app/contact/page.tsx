@@ -16,9 +16,9 @@ import { EnquiryForm } from "@/components/ui/EnquiryForm";
 import { Cloud } from "@/components/ui/Decor";
 
 export const metadata: Metadata = {
-  title: "Contact Us | Karl Konsult International",
+  title: "Contact Us | Karl Konsult International — Study Abroad Consultants in Jaipur",
   description:
-    "Talk to Karl Konsult International. Call, WhatsApp, email or book a free counselling session for studying abroad.",
+    "Talk to Karl Konsult International, study abroad and student visa consultants in Jaipur. Call, WhatsApp, email or book a free counselling session for studying abroad.",
 };
 
 const channels = [
@@ -47,8 +47,8 @@ const channels = [
 
 const promises = [
   "Reply within one working day",
-  "No fee, no obligation",
-  "Honest, outcome-first advice",
+  "Free, no-obligation counselling",
+  "Honest, student-first advice",
 ];
 
 export default function ContactPage() {

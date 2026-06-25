@@ -16,49 +16,64 @@ import {
   Translate,
 } from "@phosphor-icons/react";
 import { EnquiryButton } from "@/components/ui/EnquiryButton";
+import { destinations } from "@/lib/data";
 
 /* ---- data ---- */
 
-type Country = { name: string; code: string; intakes: string[] };
-
-const countries: Country[] = [
-  { name: "Australia", code: "au", intakes: ["February 2027", "July 2026", "November 2026"] },
-  { name: "Canada", code: "ca", intakes: ["September 2026", "January 2027", "May 2027"] },
-  { name: "France", code: "fr", intakes: ["September 2026", "January 2027"] },
-  { name: "Germany", code: "de", intakes: ["Winter 2026", "Summer 2027"] },
-  { name: "Ireland", code: "ie", intakes: ["September 2026", "January 2027"] },
-  { name: "Italy", code: "it", intakes: ["September 2026", "February 2027"] },
-  { name: "New Zealand", code: "nz", intakes: ["February 2027", "July 2026"] },
-  { name: "United Kingdom", code: "gb", intakes: ["September 2026", "January 2027"] },
-  { name: "United States", code: "us", intakes: ["Fall 2026", "Spring 2027"] },
-];
+const countries = destinations; // single source of truth (9 destinations incl Europe + China)
 
 type Col1 = { label: string; Icon: typeof MapPin; hasFlyout: boolean; href: string };
 
 const studyAbroadCols: Col1[] = [
   { label: "Destinations", Icon: MapPin, hasFlyout: true, href: "#destinations" },
   { label: "Universities", Icon: GraduationCap, hasFlyout: true, href: "#universities" },
-  { label: "MBBS Abroad", Icon: FirstAidKit, hasFlyout: false, href: "#services" },
+  { label: "MBBS Abroad", Icon: FirstAidKit, hasFlyout: false, href: "#mbbs" },
 ];
 
 const testPrep = [
-  { label: "IELTS", Icon: Exam, href: "/test-prep/ielts" },
-  { label: "PTE", Icon: Exam, href: "/test-prep/pte" },
+  { label: "IELTS / PTE / Duolingo", Icon: Exam, href: "/test-prep/ielts" },
   { label: "German Language", Icon: Translate, href: "/test-prep/german" },
+  { label: "French", Icon: Translate, href: "#language-coaching" },
+  { label: "Italian", Icon: Translate, href: "#language-coaching" },
+  { label: "Japanese", Icon: Translate, href: "#language-coaching" },
+  { label: "Chinese (Mandarin)", Icon: Translate, href: "#language-coaching" },
+  { label: "Korean", Icon: Translate, href: "#language-coaching" },
 ];
 
 const simpleLinks = [
-  { label: "Job", href: "/#insights" },
   { label: "About Us", href: "/about" },
-  { label: "Blog", href: "/#insights" },
+  { label: "MBBS Abroad", href: "/#mbbs" },
+  { label: "Blog", href: "/#blogs" },
   { label: "Contact Us", href: "/contact" },
 ];
 
 /* ---- cascading Study Abroad mega menu ---- */
 
+function NavFlag({ code, className }: { code: string; className?: string }) {
+  if (code === "eu") {
+    return (
+      <span
+        className={`grid place-items-center rounded-sm bg-[#003399] text-[8px] font-bold text-[#FFCC00] ring-1 ring-pine-900/10 ${className ?? ""}`}
+        aria-hidden
+      >
+        ★
+      </span>
+    );
+  }
+  return (
+    <Image
+      src={`https://flagcdn.com/h24/${code}.png`}
+      alt=""
+      width={26}
+      height={18}
+      className={`rounded-sm object-cover ring-1 ring-pine-900/10 ${className ?? ""}`}
+    />
+  );
+}
+
 function StudyAbroadMenu() {
   const [col1, setCol1] = useState<string>("Destinations");
-  const [country, setCountry] = useState<string>("Australia");
+  const [country, setCountry] = useState<string>(countries[0].name);
   const activeCountry = countries.find((c) => c.name === country);
 
   return (
@@ -96,13 +111,7 @@ function StudyAbroadMenu() {
                   country === c.name ? "bg-emerald-50" : "hover:bg-emerald-50/60"
                 }`}
               >
-                <Image
-                  src={`https://flagcdn.com/h24/${c.code}.png`}
-                  alt=""
-                  width={26}
-                  height={18}
-                  className="h-[18px] w-[26px] rounded-sm object-cover ring-1 ring-pine-900/10"
-                />
+                <NavFlag code={c.code} className="h-[18px] w-[26px]" />
                 <span className="flex-1 text-sm font-medium text-pine-800">
                   Study in {c.name}
                 </span>
@@ -194,7 +203,7 @@ export function Navbar() {
 
           <div className="relative" onMouseEnter={() => setMenu("test")} onMouseLeave={() => setMenu(null)}>
             <button className="flex items-center gap-1 rounded-full px-4 py-2 text-[15px] font-medium text-pine-700 transition-colors hover:text-emerald-600">
-              Test Prep
+              Languages
               <CaretDown size={14} weight="bold" className={`transition-transform ${menu === "test" ? "rotate-180" : ""}`} />
             </button>
             <AnimatePresence>
@@ -236,7 +245,7 @@ export function Navbar() {
                 <div className="ml-3 flex flex-col gap-0.5">
                   {countries.map((c) => (
                     <Link key={c.code} href="#destinations" className="flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-medium text-pine-700" onClick={() => setOpen(false)}>
-                      <Image src={`https://flagcdn.com/h24/${c.code}.png`} alt="" width={22} height={15} className="h-[15px] w-[22px] rounded-sm object-cover" />
+                      <NavFlag code={c.code} className="h-[15px] w-[22px]" />
                       Study in {c.name}
                     </Link>
                   ))}
@@ -244,7 +253,7 @@ export function Navbar() {
               )}
 
               <button className="flex items-center justify-between rounded-xl px-3 py-3 font-medium text-pine-700" onClick={() => setMobileSub((s) => (s === "test" ? null : "test"))}>
-                Test Prep
+                Languages
                 <CaretDown size={16} weight="bold" className={`transition-transform ${mobileSub === "test" ? "rotate-180" : ""}`} />
               </button>
               {mobileSub === "test" && (

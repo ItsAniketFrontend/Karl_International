@@ -20,9 +20,9 @@ import { EnquiryButton } from "@/components/ui/EnquiryButton";
 import { Cloud } from "@/components/ui/Decor";
 
 export const metadata: Metadata = {
-  title: "About Us | Karl Konsult International",
+  title: "About Us | Karl Konsult International — Study Abroad Consultants in Jaipur",
   description:
-    "Meet Karl Konsult International, overseas education consultants guiding students to the right university since 2009 with honest, outcome-first advice.",
+    "Meet Karl Konsult International, trusted overseas education consultants in Jaipur guiding students to top universities abroad since 2009 with honest, student-first support.",
 };
 
 const stats = [
@@ -35,36 +35,40 @@ const stats = [
 const timeline = [
   { year: "2009", title: "The first office", desc: "Started in Jaipur with one counsellor and one promise: honest advice." },
   { year: "2014", title: "1,000 students", desc: "Crossed our first thousand placements across the UK and Australia." },
-  { year: "2019", title: "Eight countries", desc: "Expanded to Canada, Germany, Ireland, the US and more." },
-  { year: "2026", title: "5,000+ and counting", desc: "A trusted team with a 98% visa success rate." },
+  { year: "2019", title: "Going global", desc: "Grew across Canada, Germany, Europe, the US and more." },
+  { year: "2026", title: "5,000+ and counting", desc: "A trusted team with a 98% student-visa success rate." },
 ];
 
 const values = [
   {
     Icon: ShieldCheck,
     title: "Honesty first",
-    desc: "We recommend what fits you, not what pays us the most. Always.",
+    desc: "We recommend the course and university that genuinely fit you — clearly and transparently.",
     tint: "bg-emerald-50 text-emerald-600",
   },
   {
     Icon: HandHeart,
     title: "Student at the centre",
-    desc: "Every shortlist starts from your scores, budget and ambitions.",
+    desc: "Every plan starts from your scores, budget and ambitions — never a one-size-fits-all template.",
     tint: "bg-coral-400/15 text-coral-500",
   },
   {
     Icon: Compass,
-    title: "End to end",
-    desc: "From the first call to the visa stamp, one team stays with you.",
+    title: "With you, end to end",
+    desc: "From your first call to your visa stamp and beyond, one team stays with you the whole way.",
     tint: "bg-gold-400/20 text-gold-500",
   },
 ];
 
+// Real team photos coming soon — Unsplash placeholders for now (swap before launch).
+const teamPhoto = (id: string) =>
+  `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=500&h=500&q=70`;
+
 const team = [
-  { name: "Rajeev Karl", role: "Founder & Lead Counsellor", img: "https://picsum.photos/seed/karl-team-rajeev/500/500" },
-  { name: "Meher Sodhi", role: "Visa & Documentation Head", img: "https://picsum.photos/seed/karl-team-meher/500/500" },
-  { name: "Aman Verma", role: "Test Prep Lead", img: "https://picsum.photos/seed/karl-team-aman/500/500" },
-  { name: "Priya Nair", role: "University Relations", img: "https://picsum.photos/seed/karl-team-priya/500/500" },
+  { name: "Rajeev Karl", role: "Founder & Lead Counsellor", img: teamPhoto("1560250097-0b93528c311a") },
+  { name: "Meher Sodhi", role: "Visa & Documentation Head", img: teamPhoto("1573496359142-b8d87734a5a2") },
+  { name: "Aman Verma", role: "Test Prep Lead", img: teamPhoto("1519085360753-af0119f7cbe7") },
+  { name: "Priya Nair", role: "University Relations", img: teamPhoto("1487412720507-e7ab37603c6f") },
 ];
 
 export default function AboutPage() {
@@ -89,9 +93,9 @@ export default function AboutPage() {
                   About Karl Konsult
                 </span>
                 <h1 className="mt-6 font-display text-[2.4rem] font-bold leading-[1.04] tracking-tight text-pine-900 sm:text-5xl lg:text-[4.25rem]">
-                  Your education
+                  Your study abroad
                   <br />
-                  buddy,{" "}
+                  partner,{" "}
                   <span className="relative inline-block text-emerald-600">
                     since 2009
                     <svg
@@ -104,9 +108,10 @@ export default function AboutPage() {
                     </svg>
                   </span>
                 </h1>
-                <p className="mt-7 max-w-[46ch] text-lg leading-relaxed text-pine-700">
-                  We are counsellors first, agents second. Here is the team and the
-                  honest thinking behind every offer letter we help win.
+                <p className="mt-7 max-w-[48ch] text-lg leading-relaxed text-pine-700">
+                  We&apos;re a team of overseas education consultants in Jaipur who treat
+                  your dream like our own. Meet the people — and the honest, student-first
+                  thinking — behind every admission and visa we help you win.
                 </p>
                 <div className="mt-8">
                   <EnquiryButton size="lg">
@@ -122,12 +127,12 @@ export default function AboutPage() {
               <div className="absolute -bottom-8 -left-8 -z-0 h-48 w-48 blob bg-coral-300/50 blur-2xl" />
               <div className="relative animate-floaty-slow overflow-hidden rounded-[2.5rem] ring-4 ring-white shadow-[0_40px_80px_-32px_rgba(21,35,63,0.45)]">
                 <Image
-                  src="/who_we_are.png"
-                  alt="The Karl Konsult counselling team helping a student"
+                  src="https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=crop&w=1100&q=75"
+                  alt="The Karl Konsult counselling team helping students plan studying abroad"
                   width={1100}
                   height={900}
                   priority
-                  className="h-auto w-full"
+                  className="aspect-[11/9] h-auto w-full object-cover"
                 />
               </div>
               {/* floating chip */}
@@ -170,13 +175,15 @@ export default function AboutPage() {
                 </h2>
                 <div className="mt-5 space-y-4 text-lg leading-relaxed text-pine-700/85">
                   <p>
-                    Karl Konsult started in 2009 with one belief: studying abroad should
-                    not depend on who you know or how much jargon you can decode. It should
-                    depend on a clear plan and honest advice.
+                    Karl Konsult started in 2009 with one belief: studying abroad
+                    shouldn&apos;t depend on who you know or how much jargon you can
+                    decode. It should depend on a clear plan and honest advice.
                   </p>
                   <p>
-                    We turn down commissions when a course is not right, because the offer
-                    letter that matters is the one you are actually proud of.
+                    So we take the time to understand each student — your goals, your
+                    budget, your worries — and recommend the path that&apos;s genuinely
+                    right for you. The admission that matters is the one you&apos;re truly
+                    proud of.
                   </p>
                 </div>
               </Reveal>
@@ -250,7 +257,7 @@ export default function AboutPage() {
                   <h3 className="mt-5 font-display text-2xl font-bold">Our mission</h3>
                   <p className="mt-3 leading-relaxed text-white/75">
                     To make studying abroad clear, fair and achievable for every serious
-                    student, with guidance that puts the outcome first.
+                    student, with guidance that puts your success first.
                   </p>
                 </div>
               </Reveal>
@@ -297,7 +304,7 @@ export default function AboutPage() {
                 The people
               </span>
               <h2 className="mt-4 font-display text-[2rem] font-bold leading-[1.1] tracking-tight text-pine-900 sm:text-4xl">
-                Counsellors who pick up the phone
+                Meet the team behind your journey
               </h2>
             </Reveal>
             <div className="mt-12 grid grid-cols-2 gap-5 sm:gap-6 lg:grid-cols-4">
