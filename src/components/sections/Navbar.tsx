@@ -203,7 +203,7 @@ export function Navbar() {
 
           <div className="relative" onMouseEnter={() => setMenu("test")} onMouseLeave={() => setMenu(null)}>
             <button className="flex items-center gap-1 rounded-full px-4 py-2 text-[15px] font-medium text-pine-700 transition-colors hover:text-emerald-600">
-              Languages
+              Test Prep
               <CaretDown size={14} weight="bold" className={`transition-transform ${menu === "test" ? "rotate-180" : ""}`} />
             </button>
             <AnimatePresence>
@@ -253,7 +253,7 @@ export function Navbar() {
               )}
 
               <button className="flex items-center justify-between rounded-xl px-3 py-3 font-medium text-pine-700" onClick={() => setMobileSub((s) => (s === "test" ? null : "test"))}>
-                Languages
+                Test Prep
                 <CaretDown size={16} weight="bold" className={`transition-transform ${mobileSub === "test" ? "rotate-180" : ""}`} />
               </button>
               {mobileSub === "test" && (
