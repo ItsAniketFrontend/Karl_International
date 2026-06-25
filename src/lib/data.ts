@@ -131,26 +131,31 @@ export const languageCourses: LanguageCourse[] = [
     blurb:
       "DELF/TEF-ready French for study and PR pathways in France and Canada.",
     meta: "A1 – B2",
+    href: "/test-prep/french",
   },
   {
     name: "Italian",
     blurb: "Beginner to intermediate Italian for study and life in Italy.",
     meta: "A1 – B1",
+    href: "/test-prep/italian",
   },
   {
     name: "Japanese",
     blurb: "JLPT-focused Japanese for study, scholarships and work in Japan.",
     meta: "N5 – N3",
+    href: "/test-prep/japanese",
   },
   {
     name: "Chinese (Mandarin)",
     blurb: "HSK-aligned Mandarin for China scholarships and exchange programmes.",
     meta: "HSK 1 – 4",
+    href: "/test-prep/chinese",
   },
   {
     name: "Korean",
     blurb: "TOPIK-ready Korean for Korea's growing roster of global degrees.",
     meta: "TOPIK 1 – 3",
+    href: "/test-prep/korean",
   },
 ];
 

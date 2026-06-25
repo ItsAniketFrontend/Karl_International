@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import {
   Headphones,
   BookOpen,
@@ -7,12 +8,15 @@ import {
   Microphone,
   Sparkle,
   ArrowRight,
+  ArrowUpRight,
   CheckCircle,
   Target,
   ChartLineUp,
   ClipboardText,
   Exam,
   Star,
+  Lightning,
+  Laptop,
 } from "@phosphor-icons/react/dist/ssr";
 import { Navbar } from "@/components/sections/Navbar";
 import { Footer } from "@/components/sections/Footer";
@@ -112,12 +116,12 @@ export default function IELTSPage() {
             <Reveal direction="left" className="relative mx-auto w-full max-w-[520px]">
               <div className="absolute -right-6 -top-6 -z-0 h-44 w-44 blob bg-gold-300/60 blur-2xl" />
               <Image
-                src="/ielts-hero.png"
-                alt="Student preparing for the IELTS exam"
-                width={760}
-                height={760}
+                src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=900&q=75"
+                alt="Student preparing for the IELTS exam with headphones and books"
+                width={900}
+                height={900}
                 priority
-                className="relative w-full animate-floaty-slow drop-shadow-[0_30px_55px_rgba(21,35,63,0.28)]"
+                className="relative aspect-square w-full animate-floaty-slow overflow-hidden rounded-[2.5rem] object-cover ring-4 ring-white drop-shadow-[0_30px_55px_rgba(21,35,63,0.28)]"
               />
               <div className="absolute -bottom-2 -left-2 w-[190px] rounded-[1.5rem] bg-white/95 p-5 ring-1 ring-emerald-100 shadow-[0_30px_60px_-30px_rgba(21,35,63,0.5)] backdrop-blur sm:-left-6 sm:w-[220px]">
                 <p className="text-xs font-semibold uppercase tracking-wide text-pine-700/55">Latest batch</p>
@@ -215,6 +219,92 @@ export default function IELTSPage() {
                   </Reveal>
                 ))}
               </div>
+            </div>
+          </div>
+        </section>
+
+        {/* OTHER ENGLISH TESTS — Duolingo & PTE */}
+        <section className="py-14 sm:py-16 lg:py-24">
+          <div className="mx-auto max-w-[1200px] px-4 sm:px-6 lg:px-8">
+            <Reveal className="mx-auto mb-12 max-w-2xl text-center">
+              <span className="inline-flex items-center gap-2 rounded-full bg-emerald-50 px-4 py-1.5 text-sm font-semibold text-emerald-700">
+                More English tests
+              </span>
+              <h2 className="mt-4 font-display text-[2rem] font-bold leading-[1.1] tracking-tight text-pine-900 sm:text-4xl">
+                IELTS isn&apos;t your only option
+              </h2>
+              <p className="mx-auto mt-4 max-w-xl text-lg text-pine-700/75">
+                Some students do better — or apply faster — with the Duolingo English Test
+                or PTE Academic. We&apos;ll help you pick the one your universities accept.
+              </p>
+            </Reveal>
+
+            <div className="grid gap-6 md:grid-cols-2">
+              {/* Duolingo */}
+              <Reveal>
+                <div className="flex h-full flex-col rounded-[1.75rem] border border-emerald-100 bg-white p-8 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_22px_45px_-28px_rgba(21,35,63,0.5)]">
+                  <div className="flex items-center justify-between">
+                    <span className="grid h-14 w-14 place-items-center rounded-2xl bg-emerald-50 text-emerald-600">
+                      <Lightning size={28} weight="fill" />
+                    </span>
+                    <span className="rounded-full bg-emerald-50 px-3 py-1 text-xs font-bold uppercase tracking-wide text-emerald-700">
+                      ~1 hour test
+                    </span>
+                  </div>
+                  <h3 className="mt-5 font-display text-2xl font-bold text-pine-900">Duolingo English Test</h3>
+                  <p className="mt-2 leading-relaxed text-pine-700/75">
+                    Take it from home, get results in about 2 days, and pay far less than a
+                    traditional exam. Accepted by a fast-growing list of universities.
+                  </p>
+                  <ul className="mt-5 space-y-2.5">
+                    {["At-home, on-demand testing", "Results in ~48 hours", "Budget-friendly fee", "Score-boosting practice with us"].map((t) => (
+                      <li key={t} className="flex items-center gap-2.5 text-sm font-medium text-pine-800">
+                        <CheckCircle size={18} weight="fill" className="shrink-0 text-emerald-600" />
+                        {t}
+                      </li>
+                    ))}
+                  </ul>
+                  <div className="mt-6">
+                    <EnquiryButton size="md">Ask about Duolingo prep</EnquiryButton>
+                  </div>
+                </div>
+              </Reveal>
+
+              {/* PTE */}
+              <Reveal delay={0.08}>
+                <div className="flex h-full flex-col rounded-[1.75rem] border border-coral-300/30 bg-white p-8 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_22px_45px_-28px_rgba(245,106,77,0.4)]">
+                  <div className="flex items-center justify-between">
+                    <span className="grid h-14 w-14 place-items-center rounded-2xl bg-coral-400/15 text-coral-500">
+                      <Laptop size={28} weight="fill" />
+                    </span>
+                    <span className="rounded-full bg-coral-400/15 px-3 py-1 text-xs font-bold uppercase tracking-wide text-coral-500">
+                      AI-scored
+                    </span>
+                  </div>
+                  <h3 className="mt-5 font-display text-2xl font-bold text-pine-900">PTE Academic</h3>
+                  <p className="mt-2 leading-relaxed text-pine-700/75">
+                    Computer-based and template-friendly, with scores in around 48 hours.
+                    Ideal if you prefer strategy over a human examiner.
+                  </p>
+                  <ul className="mt-5 space-y-2.5">
+                    {["Fully computer-based", "Results in ~48 hours", "Accepted for UK / Australia visas", "Unlimited mock tests with us"].map((t) => (
+                      <li key={t} className="flex items-center gap-2.5 text-sm font-medium text-pine-800">
+                        <CheckCircle size={18} weight="fill" className="shrink-0 text-coral-500" />
+                        {t}
+                      </li>
+                    ))}
+                  </ul>
+                  <div className="mt-6">
+                    <Link
+                      href="/test-prep/pte"
+                      className="group inline-flex items-center gap-2 rounded-full bg-coral-500 px-6 py-3 text-sm font-semibold text-white transition-all hover:-translate-y-0.5 hover:bg-coral-400"
+                    >
+                      Explore PTE coaching
+                      <ArrowUpRight size={16} weight="bold" className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                    </Link>
+                  </div>
+                </div>
+              </Reveal>
             </div>
           </div>
         </section>

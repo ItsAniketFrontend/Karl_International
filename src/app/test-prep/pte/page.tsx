@@ -97,12 +97,12 @@ export default function PTEPage() {
             <Reveal direction="left" className="relative mx-auto w-full max-w-[520px]">
               <div className="absolute -left-6 -top-6 -z-0 h-44 w-44 blob bg-coral-300/60 blur-2xl" />
               <Image
-                src="/pte-hero.png"
+                src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=900&q=75"
                 alt="Student taking the computer-based PTE Academic test"
-                width={760}
-                height={760}
+                width={900}
+                height={900}
                 priority
-                className="relative w-full animate-floaty-slow drop-shadow-[0_30px_55px_rgba(21,35,63,0.28)]"
+                className="relative aspect-square w-full animate-floaty-slow overflow-hidden rounded-[2.5rem] object-cover ring-4 ring-white drop-shadow-[0_30px_55px_rgba(21,35,63,0.28)]"
               />
               <div className="absolute -bottom-2 -right-2 rounded-[1.5rem] bg-pine-900 p-5 text-white shadow-[0_30px_60px_-30px_rgba(21,35,63,0.6)] ring-4 ring-white sm:-right-4">
                 <div className="flex items-center gap-1.5 text-coral-300">

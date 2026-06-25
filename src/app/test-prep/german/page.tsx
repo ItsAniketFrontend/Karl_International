@@ -92,12 +92,12 @@ export default function GermanPage() {
             <Reveal direction="left" className="relative mx-auto w-full max-w-[520px]">
               <div className="absolute -right-6 -top-6 -z-0 h-44 w-44 blob bg-emerald-200/60 blur-2xl" />
               <Image
-                src="/german-hero.png"
-                alt="Student learning German, waving Hallo"
-                width={760}
-                height={760}
+                src="https://images.unsplash.com/photo-1467269204594-9661b134dd2b?auto=format&fit=crop&w=900&q=75"
+                alt="Student learning German, with a view of Berlin, Germany"
+                width={900}
+                height={900}
                 priority
-                className="relative w-full animate-floaty-slow drop-shadow-[0_30px_55px_rgba(21,35,63,0.28)]"
+                className="relative aspect-square w-full animate-floaty-slow overflow-hidden rounded-[2.5rem] object-cover ring-4 ring-white drop-shadow-[0_30px_55px_rgba(21,35,63,0.28)]"
               />
               <div className="absolute -left-2 top-6 rounded-2xl bg-white/95 px-4 py-3 ring-1 ring-gold-300/40 shadow-[0_20px_45px_-25px_rgba(21,35,63,0.5)] backdrop-blur sm:-left-5">
                 <p className="font-display text-lg font-bold text-pine-900">Hallo!</p>

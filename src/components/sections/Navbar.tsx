@@ -31,13 +31,14 @@ const studyAbroadCols: Col1[] = [
 ];
 
 const testPrep = [
-  { label: "IELTS / PTE / Duolingo", Icon: Exam, href: "/test-prep/ielts" },
+  { label: "IELTS / Duolingo", Icon: Exam, href: "/test-prep/ielts" },
+  { label: "PTE Academic", Icon: Exam, href: "/test-prep/pte" },
   { label: "German Language", Icon: Translate, href: "/test-prep/german" },
-  { label: "French", Icon: Translate, href: "#language-coaching" },
-  { label: "Italian", Icon: Translate, href: "#language-coaching" },
-  { label: "Japanese", Icon: Translate, href: "#language-coaching" },
-  { label: "Chinese (Mandarin)", Icon: Translate, href: "#language-coaching" },
-  { label: "Korean", Icon: Translate, href: "#language-coaching" },
+  { label: "French", Icon: Translate, href: "/test-prep/french" },
+  { label: "Italian", Icon: Translate, href: "/test-prep/italian" },
+  { label: "Japanese", Icon: Translate, href: "/test-prep/japanese" },
+  { label: "Chinese (Mandarin)", Icon: Translate, href: "/test-prep/chinese" },
+  { label: "Korean", Icon: Translate, href: "/test-prep/korean" },
 ];
 
 const simpleLinks = [

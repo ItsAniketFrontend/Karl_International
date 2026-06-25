@@ -18,6 +18,11 @@ All photos use live Unsplash URLs. To swap, drop a file in `/public` and change 
 | Study-abroad testimonials portraits | `src/components/sections/Testimonials.tsx` → `studyReviews[].img` | Real student photos (with consent) |
 | Language testimonials portraits | `src/components/sections/Testimonials.tsx` → `languageReviews[].img` | Real student photos (with consent) |
 | About hero + team (4) | `src/app/about/page.tsx` → hero `src`, `team[].img` | Real office + team photos |
+| Test-prep hero photos (IELTS/PTE/German) | `src/app/test-prep/{ielts,pte,german}/page.tsx` | Real coaching/classroom photos |
+| Language-page hero photos (5) | `src/lib/language-pages.ts` → `heroImg` | Real classroom/destination photos |
+| MBBS hero photo | `src/app/mbbs-abroad/page.tsx` | Real medical-student / campus photo |
+
+Note: the old clay illustrations `public/{hero,who_we_are,universities,ielts-hero,pte-hero,german-hero,dest-*}.png` are now unused on live pages and can be deleted once you're happy with the real photos.
 
 `public/student-1.png` is a real existing image and is still used.
 
