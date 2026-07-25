@@ -8,7 +8,7 @@ import { StickyActions } from "@/components/ui/StickyActions";
 import { Reveal } from "@/components/ui/Reveal";
 import { EnquiryButton } from "@/components/ui/EnquiryButton";
 import { Cloud } from "@/components/ui/Decor";
-import { blogPosts } from "@/lib/blog";
+import { getBlogPosts } from "@/sanity/queries";
 
 export const metadata: Metadata = {
   title: "Study Abroad Blog | Guides on Visas, IELTS, Scholarships & MBBS — Karl Konsult",
@@ -16,8 +16,11 @@ export const metadata: Metadata = {
     "Plain-language study abroad guides from Karl Konsult International, overseas education consultants in Jaipur — visas, IELTS/PTE, scholarships, MBBS abroad and country intakes.",
 };
 
-export default function BlogPage() {
-  const [featured, ...rest] = blogPosts;
+export const revalidate = 60;
+
+export default async function BlogPage() {
+  const posts = await getBlogPosts();
+  const [featured, ...rest] = posts;
 
   return (
     <>

@@ -8,17 +8,22 @@ import { Footer } from "@/components/sections/Footer";
 import { StickyActions } from "@/components/ui/StickyActions";
 import { Reveal } from "@/components/ui/Reveal";
 import { EnquiryButton } from "@/components/ui/EnquiryButton";
-import { blogPosts, blogPostBySlug } from "@/lib/blog";
+import { PortableBody } from "@/components/ui/PortableBody";
+import { getBlogPost, getBlogPosts, getBlogSlugs } from "@/sanity/queries";
 
 type Params = { slug: string };
 
-export function generateStaticParams(): Params[] {
-  return blogPosts.map((p) => ({ slug: p.slug }));
+export const revalidate = 60;
+export const dynamicParams = true;
+
+export async function generateStaticParams(): Promise<Params[]> {
+  const slugs = await getBlogSlugs();
+  return slugs.map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: { params: Promise<Params> }): Promise<Metadata> {
   const { slug } = await params;
-  const post = blogPostBySlug(slug);
+  const post = await getBlogPost(slug);
   if (!post) return {};
   return {
     title: `${post.title} | Karl Konsult International`,
@@ -28,10 +33,11 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
 
 export default async function BlogArticlePage({ params }: { params: Promise<Params> }) {
   const { slug } = await params;
-  const post = blogPostBySlug(slug);
+  const post = await getBlogPost(slug);
   if (!post) notFound();
 
-  const related = blogPosts.filter((p) => p.slug !== post.slug).slice(0, 3);
+  const all = await getBlogPosts();
+  const related = all.filter((p) => p.slug !== post.slug).slice(0, 3);
 
   return (
     <>
@@ -80,13 +86,7 @@ export default async function BlogArticlePage({ params }: { params: Promise<Para
         {/* BODY */}
         <article className="mx-auto max-w-[720px] px-4 py-12 sm:px-6 sm:py-16 lg:px-8">
           <Reveal>
-            <div className="space-y-6 text-lg leading-relaxed text-pine-800/90">
-              {post.body.map((para, i) => (
-                <p key={i} className={i === 0 ? "text-xl text-pine-900" : undefined}>
-                  {para}
-                </p>
-              ))}
-            </div>
+            <PortableBody blocks={post.body} paragraphs={post.bodyParagraphs} />
           </Reveal>
 
           {/* inline CTA */}

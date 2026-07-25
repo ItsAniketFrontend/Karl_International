@@ -45,6 +45,7 @@ const simpleLinks = [
   { label: "About Us", href: "/about" },
   { label: "MBBS Abroad", href: "/mbbs-abroad" },
   { label: "Blog", href: "/blog" },
+  { label: "News", href: "/news" },
   { label: "Contact Us", href: "/contact" },
 ];
 

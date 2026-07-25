@@ -6,6 +6,7 @@ const nextConfig = {
       { protocol: "https", hostname: "flagcdn.com" },
       { protocol: "https", hostname: "picsum.photos" },
       { protocol: "https", hostname: "cdn.simpleicons.org" },
+      { protocol: "https", hostname: "cdn.sanity.io" },
     ],
   },
 };

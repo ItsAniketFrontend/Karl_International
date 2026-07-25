@@ -8,13 +8,13 @@ import {
   Bank,
 } from "@phosphor-icons/react/dist/ssr";
 import { Reveal } from "@/components/ui/Reveal";
-import { blogPosts } from "@/lib/blog";
+import { getBlogPosts } from "@/sanity/queries";
 
 /**
  * Guides & insights as an editorial magazine layout: one bold featured guide,
- * then a clean categorised list. Pulls the real blog posts (src/lib/blog.ts) so
- * the homepage teaser and the /blog section stay in sync. Themed icon art per
- * guide keeps it cohesive with the brand.
+ * then a clean categorised list. Pulls the live blog posts from the CMS (Sanity,
+ * with a fallback to src/lib/blog.ts) so the homepage teaser and the /blog
+ * section always stay in sync. Themed icon art per guide keeps it cohesive.
  */
 const tints = [
   "bg-emerald-50 text-emerald-600",
@@ -23,14 +23,15 @@ const tints = [
 ];
 const icons = [CalendarCheck, PencilLine, Bank];
 
-const featured = { ...blogPosts[0], Icon: FileText };
-const posts = blogPosts.slice(1, 4).map((p, i) => ({
-  ...p,
-  Icon: icons[i % icons.length],
-  tint: tints[i % tints.length],
-}));
+export async function Insights() {
+  const all = await getBlogPosts();
+  const featured = { ...all[0], Icon: FileText };
+  const posts = all.slice(1, 4).map((p, i) => ({
+    ...p,
+    Icon: icons[i % icons.length],
+    tint: tints[i % tints.length],
+  }));
 
-export function Insights() {
   return (
     <section id="blogs" className="relative overflow-hidden bg-bone py-14 sm:py-16 lg:py-24">
       <div className="pointer-events-none absolute -right-32 top-24 -z-0 h-96 w-96 rounded-full bg-emerald-100/40 blur-3xl" />

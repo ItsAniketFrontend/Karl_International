@@ -1,0 +1,88 @@
+# CMS setup — Karl Konsult (Sanity)
+
+The site uses **Sanity** as its CMS. Non-technical staff log in at **`/studio`** to
+manage content; the public site reads it live. This is **Phase 1: Blog + News**.
+
+The site is built so that **if the CMS is empty or unreachable, the blog falls back
+to the built-in sample posts** — so nothing ever breaks during setup.
+
+---
+
+## What's editable now
+
+| Content | Where staff edit it | Where it shows |
+| --- | --- | --- |
+| **Blog posts** | `/studio` → Blog Post | `/blog`, `/blog/[slug]`, homepage "Blogs & guides" |
+| **News / announcements** | `/studio` → News | `/news`, navbar → News |
+
+Coming in later phases: enquiry **leads dashboard**, and **country/intake** content.
+
+---
+
+## One-time setup
+
+### 1. Environment variables
+Local dev already has `.env.local` with:
+```
+NEXT_PUBLIC_SANITY_PROJECT_ID=ik7gcwnu
+NEXT_PUBLIC_SANITY_DATASET=production
+NEXT_PUBLIC_SANITY_API_VERSION=2024-10-01
+SANITY_API_WRITE_TOKEN=        # only for migration / future lead writes
+```
+**On Vercel:** add these same three `NEXT_PUBLIC_*` vars in
+Project → Settings → Environment Variables (the write token is NOT needed for the
+site to run — only for the one-time migration script). Redeploy after adding.
+
+### 2. CORS (so the Studio can talk to Sanity)
+At <https://www.sanity.io/manage> → project **ik7gcwnu** → **API → CORS origins**,
+add (with credentials allowed):
+- `http://localhost:3000` (local)
+- your Vercel URL, e.g. `https://karlweb.vercel.app`
+- your final custom domain once live
+
+### 3. Log in to the Studio
+Visit `/studio` (locally `http://localhost:3000/studio`). Sign in with the Google/GitHub
+account that owns the Sanity project. Invite staff as project members at
+sanity.io/manage → **Members** (give them Editor role — they do NOT need code access).
+
+---
+
+## Import the 6 existing blog posts (optional, one-time)
+
+The site already shows the 6 sample posts via fallback. To make them **editable in the
+CMS**, import them once:
+
+1. Create an **Editor token**: sanity.io/manage → project → **API → Tokens → Add token**
+   (Editor role). Copy it.
+2. Paste it into `.env.local` as `SANITY_API_WRITE_TOKEN=...` (keep it secret; it's
+   gitignored).
+3. Run:
+   ```
+   npm run migrate:blog
+   ```
+   This creates 6 Blog Post documents. Cover images are **not** imported (the originals
+   are stock URLs) — upload a cover per post in the Studio, or they use a default image.
+
+Once posts exist in Sanity, the site reads those instead of the fallback automatically.
+
+---
+
+## Day-to-day: how staff publish
+
+1. Go to `yoursite.com/studio`
+2. **Blog Post** or **News** → **＋ Create**
+3. Fill in title, slug (click *Generate*), category, excerpt, cover image, body
+4. Click **Publish**
+5. The site updates within ~60 seconds (ISR). No developer or redeploy needed.
+
+---
+
+## How it works (for developers)
+
+- `sanity.config.ts` + `src/app/studio/[[...tool]]/page.tsx` — the embedded Studio.
+- `src/sanity/schemaTypes/*` — content schemas (`blogPost`, `newsItem`).
+- `src/sanity/queries.ts` — GROQ queries + typed fetchers, **with fallback** to
+  `src/lib/blog.ts`. All reads go through here.
+- `src/components/ui/PortableBody.tsx` — renders CMS rich text (and fallback paragraphs).
+- Pages use ISR (`export const revalidate = 60`) so new content appears without a rebuild.
+- Blog `dynamicParams = true`, so posts created in the CMS after deploy still render.

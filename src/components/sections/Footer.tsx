@@ -27,9 +27,9 @@ const coachingLinks = [
 const exploreLinks = [
   { label: "Scholarships", href: "/scholarships" },
   { label: "Universities", href: "/universities" },
-  { label: "Country Guides", href: "/blog" },
-  { label: "Visa Success Stories", href: "/#testimonials" },
   { label: "Blogs", href: "/blog" },
+  { label: "News & Updates", href: "/news" },
+  { label: "Visa Success Stories", href: "/#testimonials" },
   { label: "FAQ", href: "/faq" },
 ];
 
