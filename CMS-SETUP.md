@@ -15,8 +15,31 @@ to the built-in sample posts** — so nothing ever breaks during setup.
 | **Blog posts** | `/studio` → Blog Posts | `/blog`, `/blog/[slug]`, homepage "Blogs & guides" |
 | **News / announcements** | `/studio` → News & Updates | `/news`, navbar → News |
 | **Enquiry leads** | `/studio` → Enquiry Leads (view only) | — (staff view submissions) |
+| **Country pages** | `/studio` → Country Pages | `/study-abroad/[country]` |
 
-Coming in a later phase: **country/intake** content.
+---
+
+## Country pages (Phase 3)
+
+Staff can override the **high-churn** parts of each country page from the CMS
+without touching code. In `/studio` → **Country Pages** → **＋ Create**, pick a
+country, and fill only the fields you want to change:
+
+- Intro paragraph, indicative tuition & living cost, work-rights summary
+- Top universities, popular courses, scholarships
+- Intake summaries (name / months / status / summary)
+- FAQs
+
+**Every field is optional.** Anything left blank falls back to the built-in
+content, so you can override just one figure (say, updated UK tuition) and leave
+the rest alone. A country with no override document shows the default content.
+
+The **deep nested structures** (application timelines, comparison tables, the
+full course grids, the per-intake landing pages) stay in code by design — this
+covers the text/list content that actually changes year to year. If you later
+need those editable too, that's a follow-up.
+
+Changes appear on the live page within ~60 seconds (ISR).
 
 ---
 

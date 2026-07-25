@@ -16,6 +16,10 @@ export const structure: StructureResolver = (S) =>
         .title("News & Updates")
         .schemaType("newsItem")
         .child(S.documentTypeList("newsItem").title("News & Updates")),
+      S.listItem()
+        .title("Country Pages")
+        .schemaType("countryOverride")
+        .child(S.documentTypeList("countryOverride").title("Country Pages")),
       S.divider(),
       S.listItem()
         .title("Enquiry Leads")
