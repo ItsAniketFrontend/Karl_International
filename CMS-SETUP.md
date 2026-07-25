@@ -12,10 +12,42 @@ to the built-in sample posts** — so nothing ever breaks during setup.
 
 | Content | Where staff edit it | Where it shows |
 | --- | --- | --- |
-| **Blog posts** | `/studio` → Blog Post | `/blog`, `/blog/[slug]`, homepage "Blogs & guides" |
-| **News / announcements** | `/studio` → News | `/news`, navbar → News |
+| **Blog posts** | `/studio` → Blog Posts | `/blog`, `/blog/[slug]`, homepage "Blogs & guides" |
+| **News / announcements** | `/studio` → News & Updates | `/news`, navbar → News |
+| **Enquiry leads** | `/studio` → Enquiry Leads (view only) | — (staff view submissions) |
 
-Coming in later phases: enquiry **leads dashboard**, and **country/intake** content.
+Coming in a later phase: **country/intake** content.
+
+---
+
+## Enquiry leads (Phase 2)
+
+The website enquiry form now submits to **`/api/enquiry`**, which saves each
+submission as a **Lead** in Sanity. Staff view them in the Studio under
+**Enquiry Leads** (newest first, read-only — you view, you don't edit).
+
+### ⚠️ Required: add a write token (or leads are NOT saved)
+The form works either way, but **without a write token, submissions are logged
+to the server but not stored**. To actually capture leads:
+
+1. Create a token: sanity.io/manage → project **ik7gcwnu** → **API → Tokens →
+   Add API token** → name it "Website writes", role **Editor**. Copy it.
+2. **Local:** put it in `.env.local` as `SANITY_API_WRITE_TOKEN=...`
+3. **Vercel:** add the same as an environment variable
+   `SANITY_API_WRITE_TOKEN` (Production + Preview), then **redeploy**.
+
+Keep this token **secret** — it's server-side only and gitignored. It is NOT one
+of the `NEXT_PUBLIC_*` vars; the browser never sees it.
+
+### Test it
+Submit the enquiry form on the site (or the popup). Within a few seconds the
+lead appears in `/studio` → **Enquiry Leads**. Includes name, email, phone, city,
+age, qualification, degree, destination, intake, IELTS/PTE score, message, the
+page it came from, and a timestamp.
+
+### Spam protection
+The form has a hidden honeypot field; bot submissions that fill it are silently
+discarded. Required fields (name, email, phone) are validated server-side.
 
 ---
 

@@ -58,22 +58,51 @@ function Field({
 
 /**
  * Shared enquiry form used by both the inline Counselling section and the popup
- * modal. Demo submission -- wire `onSubmit` to a real endpoint / CRM in production.
+ * modal. Submits to /api/enquiry, which stores the lead in Sanity (viewable in
+ * the Studio at /studio → Enquiry Leads).
  */
-export function EnquiryForm({ compact = false }: { compact?: boolean }) {
+export function EnquiryForm({
+  compact = false,
+  source = "website",
+}: {
+  compact?: boolean;
+  source?: string;
+}) {
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState("");
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const data = new FormData(e.currentTarget);
+    const form = e.currentTarget;
+    const data = new FormData(form);
+
     if (!data.get("name") || !data.get("phone") || !data.get("email")) {
       setError("Please add your name, email and phone number.");
       return;
     }
     setError("");
     setStatus("loading");
-    setTimeout(() => setStatus("done"), 1100);
+
+    const payload: Record<string, string> = { source };
+    data.forEach((value, key) => {
+      if (typeof value === "string") payload[key] = value;
+    });
+
+    try {
+      const res = await fetch("/api/enquiry", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      const json = await res.json().catch(() => ({ ok: false }));
+      if (!res.ok || !json.ok) {
+        throw new Error(json.error || "Something went wrong. Please try again.");
+      }
+      setStatus("done");
+    } catch (err) {
+      setStatus("idle");
+      setError(err instanceof Error ? err.message : "Something went wrong. Please try again.");
+    }
   }
 
   if (status === "done") {
@@ -90,6 +119,15 @@ export function EnquiryForm({ compact = false }: { compact?: boolean }) {
 
   return (
     <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-4">
+      {/* honeypot — hidden from users, catches bots */}
+      <input
+        type="text"
+        name="company"
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden="true"
+        className="absolute left-[-9999px] h-0 w-0 opacity-0"
+      />
       <Field label="Full name" htmlFor="name">
         <input id="name" name="name" type="text" placeholder="e.g. Ananya Rathore" className={inputBase} />
       </Field>

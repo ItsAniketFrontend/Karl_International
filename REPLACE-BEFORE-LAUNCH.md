@@ -97,10 +97,12 @@ OPT duration), **Europe** (rules differ per country — the page treats it as a 
 
 ## 4. Functional wiring
 
-- **Enquiry form** (`src/components/ui/EnquiryForm.tsx`) is a demo (setTimeout). Wire
-  `handleSubmit` to your real CRM / email endpoint. New fields now captured: `city`,
-  `intake`, `score` (in addition to name, email, phone, age, qualification, degree,
-  destination, message).
+- **Enquiry form** — ✅ NOW LIVE. Submits to `/api/enquiry`, which stores each lead in
+  Sanity (viewable in `/studio` → Enquiry Leads). **To actually capture leads you must set
+  the `SANITY_API_WRITE_TOKEN` env var** (local + Vercel) — see CMS-SETUP.md. Without it,
+  the form still works for users but leads are only logged, not saved. Captured fields:
+  name, email, phone, city, age, qualification, degree, destination, intake, IELTS/PTE
+  score, message + source page + timestamp. (Optional future add-on: email alert per lead.)
 - **Footer legal links** (Privacy Policy, Terms & Conditions, Refund Policy, Legal) point
   to `#`. Create the actual pages/policies and link them.
 - **Logo**: `public/logo-white.png` is an auto-generated white knockout of `logo.png`

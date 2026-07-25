@@ -9,6 +9,7 @@ import { structureTool } from "sanity/structure";
 import { visionTool } from "@sanity/vision";
 import { apiVersion, dataset, projectId } from "./src/sanity/env";
 import { schema } from "./src/sanity/schemaTypes";
+import { structure } from "./src/sanity/structure";
 
 export default defineConfig({
   name: "karl-konsult",
@@ -18,7 +19,7 @@ export default defineConfig({
   dataset,
   schema,
   plugins: [
-    structureTool(),
+    structureTool({ structure }),
     visionTool({ defaultApiVersion: apiVersion }),
   ],
 });
