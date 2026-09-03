@@ -13,6 +13,7 @@ import { StickyActions } from "@/components/ui/StickyActions";
 import { Reveal } from "@/components/ui/Reveal";
 import { EnquiryForm } from "@/components/ui/EnquiryForm";
 import { Cloud } from "@/components/ui/Decor";
+import { getSiteSettings } from "@/sanity/site-settings";
 
 export const metadata: Metadata = {
   title: "Contact Us | Karl Konsult International — Study Abroad Consultants in Jaipur",
@@ -20,37 +21,38 @@ export const metadata: Metadata = {
     "Talk to Karl Konsult International, study abroad and student visa consultants in Jaipur. Call, WhatsApp, email or book a free counselling session for studying abroad.",
 };
 
-const channels = [
-  {
-    Icon: Phone,
-    label: "Call us",
-    value: "+91 97723 00000",
-    href: "tel:+919772300000",
-    tint: "bg-emerald-50 text-emerald-600",
-  },
-  {
-    Icon: WhatsappLogo,
-    label: "WhatsApp",
-    value: "Chat instantly",
-    href: "https://wa.me/919772300000",
-    tint: "bg-[#25D366]/15 text-[#1faa52]",
-  },
-  {
-    Icon: EnvelopeSimple,
-    label: "Email",
-    value: "hello@karlkonsult.com",
-    href: "mailto:hello@karlkonsult.com",
-    tint: "bg-coral-400/15 text-coral-500",
-  },
-];
-
 const promises = [
   "Reply within one working day",
   "Free, no-obligation counselling",
   "Honest, student-first advice",
 ];
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  const settings = await getSiteSettings();
+  const channels = [
+    {
+      Icon: Phone,
+      label: "Call us",
+      value: settings.phone,
+      href: `tel:${settings.phoneDial}`,
+      tint: "bg-emerald-50 text-emerald-600",
+    },
+    {
+      Icon: WhatsappLogo,
+      label: "WhatsApp",
+      value: "Chat instantly",
+      href: `https://wa.me/${settings.whatsapp}`,
+      tint: "bg-[#25D366]/15 text-[#1faa52]",
+    },
+    {
+      Icon: EnvelopeSimple,
+      label: "Email",
+      value: settings.email,
+      href: `mailto:${settings.email}`,
+      tint: "bg-coral-400/15 text-coral-500",
+    },
+  ];
+
   return (
     <>
       <Navbar />
@@ -167,22 +169,18 @@ export default function ContactPage() {
                       <MapPin size={28} weight="fill" />
                     </span>
                     <h3 className="mt-5 font-display text-2xl font-bold">Head office</h3>
-                    <p className="mt-3 leading-relaxed text-white/75">
-                      3rd Floor, Crystal Mall, C-Scheme,
-                      <br />
-                      Jaipur, Rajasthan 302001
-                    </p>
+                    <p className="mt-3 leading-relaxed text-white/75">{settings.address}</p>
                   </div>
 
                   <div className="mt-8 space-y-4 border-t border-white/10 pt-6">
                     <div className="flex items-center gap-3">
                       <Clock size={20} weight="fill" className="shrink-0 text-gold-300" />
-                      <p className="text-sm text-white/80">Mon to Sat · 10:00 AM to 7:00 PM</p>
+                      <p className="text-sm text-white/80">{settings.officeHours}</p>
                     </div>
                     <div className="flex items-center gap-3">
                       <Phone size={20} weight="fill" className="shrink-0 text-gold-300" />
-                      <a href="tel:+919772300000" className="text-sm text-white/80 hover:text-white">
-                        +91 97723 00000
+                      <a href={`tel:${settings.phoneDial}`} className="text-sm text-white/80 hover:text-white">
+                        {settings.phone}
                       </a>
                     </div>
                   </div>

@@ -5,15 +5,14 @@ import { motion, AnimatePresence } from "motion/react";
 import { Phone, WhatsappLogo, ChatCircleDots, X } from "@phosphor-icons/react";
 import { EnquiryForm } from "@/components/ui/EnquiryForm";
 import { enquiry, useEnquiryOpen } from "@/components/ui/enquiry-store";
-
-const PHONE = "+919772300000";
-const WHATSAPP = "919772300000";
+import { defaultSiteSettings, getSiteSettings } from "@/sanity/site-settings";
 
 /**
  * Three sticky floating actions (Call, WhatsApp, Enquiry) plus the enquiry popup
- * modal. Mounted once at the page root. Any CTA can open the modal via the store.
+ * modal. Mounted once at the page root (via the async StickyActions wrapper
+ * below, which fetches CMS contact info). Any CTA can open the modal via the store.
  */
-export function StickyActions() {
+function StickyActionsClient({ phone, whatsapp }: { phone: string; whatsapp: string }) {
   const open = useEnquiryOpen();
 
   // lock body scroll while the modal is open
@@ -36,14 +35,14 @@ export function StickyActions() {
       {/* sticky buttons */}
       <div className="fixed bottom-5 right-4 z-40 flex flex-col gap-3 sm:bottom-6 sm:right-6">
         <a
-          href={`tel:${PHONE}`}
+          href={`tel:${phone}`}
           aria-label="Call us"
           className="grid h-[3.25rem] w-[3.25rem] place-items-center rounded-full bg-emerald-600 text-white shadow-[0_14px_30px_-8px_rgba(21,118,214,0.6)] transition-all hover:-translate-y-1 hover:bg-emerald-700"
         >
           <Phone size={24} weight="fill" />
         </a>
         <a
-          href={`https://wa.me/${WHATSAPP}`}
+          href={`https://wa.me/${whatsapp}`}
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Chat on WhatsApp"
@@ -110,5 +109,20 @@ export function StickyActions() {
         )}
       </AnimatePresence>
     </>
+  );
+}
+
+/**
+ * Server wrapper: fetches CMS contact info (falling back to the defaults if
+ * unset) and renders the client component. Import and mount this — not
+ * StickyActionsClient directly — so every page picks up CMS edits.
+ */
+export async function StickyActions() {
+  const { phoneDial, whatsapp } = await getSiteSettings();
+  return (
+    <StickyActionsClient
+      phone={phoneDial || defaultSiteSettings.phoneDial}
+      whatsapp={whatsapp || defaultSiteSettings.whatsapp}
+    />
   );
 }

@@ -1,18 +1,36 @@
 import Link from "next/link";
 import { Reveal } from "@/components/ui/Reveal";
 import { socialMeta, type SocialKey } from "@/components/ui/SocialIcons";
+import { getSiteSettings } from "@/sanity/site-settings";
 
-// Replace href + handle with your real profiles before launch.
-const socials: { key: SocialKey; handle: string; href: string }[] = [
-  { key: "instagram", handle: "@karlkonsult", href: "#" },
-  { key: "facebook", handle: "/karlkonsult", href: "#" },
-  { key: "linkedin", handle: "Karl Konsult Intl.", href: "#" },
-  { key: "youtube", handle: "Karl Konsult", href: "#" },
-  { key: "whatsapp", handle: "+91 97723 00000", href: "#" },
-  { key: "x", handle: "@karlkonsult", href: "#" },
-];
+// Default handles shown until a real social URL is set in the CMS (Site Settings).
+const defaultHandles: Record<SocialKey, string> = {
+  instagram: "@karlkonsult",
+  facebook: "/karlkonsult",
+  linkedin: "Karl Konsult Intl.",
+  youtube: "Karl Konsult",
+  whatsapp: "+91 97723 00000",
+  x: "@karlkonsult",
+};
 
-export function SocialLinks() {
+const socialOrder: SocialKey[] = ["instagram", "facebook", "linkedin", "youtube", "whatsapp", "x"];
+
+export async function SocialLinks() {
+  const { socialLinks, phone } = await getSiteSettings();
+  const hrefs: Record<SocialKey, string> = {
+    instagram: socialLinks.instagram || "#",
+    facebook: socialLinks.facebook || "#",
+    linkedin: socialLinks.linkedin || "#",
+    youtube: socialLinks.youtube || "#",
+    whatsapp: socialLinks.whatsapp || "#",
+    x: socialLinks.x || "#",
+  };
+  const socials = socialOrder.map((key) => ({
+    key,
+    href: hrefs[key],
+    handle: key === "whatsapp" ? phone : defaultHandles[key],
+  }));
+
   return (
     <section id="social" className="bg-white py-14 sm:py-16 lg:py-20">
       <div className="mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-8">

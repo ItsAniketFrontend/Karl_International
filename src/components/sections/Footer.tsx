@@ -4,6 +4,7 @@ import { MapPin, Phone, EnvelopeSimple } from "@phosphor-icons/react/dist/ssr";
 import { socialMeta, type SocialKey } from "@/components/ui/SocialIcons";
 import { destinations, languageCourses } from "@/lib/data";
 import { countryContent } from "@/lib/content";
+import { getSiteSettings } from "@/sanity/site-settings";
 
 const studyLinks = destinations.map((d) => ({ label: `Study in ${d.name}`, href: `/study-abroad/${d.slug}` }));
 
@@ -65,7 +66,19 @@ function LinkCol({ title, links }: { title: string; links: { label: string; href
   );
 }
 
-export function Footer() {
+export async function Footer() {
+  const settings = await getSiteSettings();
+  const telHref = `tel:${settings.phoneDial}`;
+  const mailHref = `mailto:${settings.email}`;
+  const socialHrefs: Partial<Record<SocialKey, string>> = {
+    instagram: settings.socialLinks.instagram,
+    facebook: settings.socialLinks.facebook,
+    linkedin: settings.socialLinks.linkedin,
+    youtube: settings.socialLinks.youtube,
+    whatsapp: settings.socialLinks.whatsapp,
+    x: settings.socialLinks.x,
+  };
+
   return (
     <footer className="bg-pine-900 text-white">
       <div className="mx-auto max-w-[1400px] px-4 py-16 sm:px-6 lg:px-8">
@@ -90,7 +103,7 @@ export function Footer() {
                 return (
                   <Link
                     key={key}
-                    href="#"
+                    href={socialHrefs[key] || "#"}
                     aria-label={label}
                     className="grid h-10 w-10 place-items-center rounded-full bg-white/10 text-white transition-colors hover:bg-emerald-600"
                   >
@@ -117,17 +130,15 @@ export function Footer() {
             <div className="space-y-3">
               <div className="flex items-start gap-3">
                 <MapPin size={20} weight="fill" className="mt-0.5 shrink-0 text-gold-300" />
-                <p className="text-sm text-white/70">
-                  3rd Floor, Crystal Mall, C-Scheme, Jaipur, Rajasthan 302001
-                </p>
+                <p className="text-sm text-white/70">{settings.address}</p>
               </div>
-              <a href="tel:+919772300000" className="flex items-center gap-3 text-sm text-white/70 hover:text-white">
+              <a href={telHref} className="flex items-center gap-3 text-sm text-white/70 hover:text-white">
                 <Phone size={20} weight="fill" className="shrink-0 text-gold-300" />
-                +91 97723 00000
+                {settings.phone}
               </a>
-              <a href="mailto:hello@karlkonsult.com" className="flex items-center gap-3 text-sm text-white/70 hover:text-white">
+              <a href={mailHref} className="flex items-center gap-3 text-sm text-white/70 hover:text-white">
                 <EnvelopeSimple size={20} weight="fill" className="shrink-0 text-gold-300" />
-                hello@karlkonsult.com
+                {settings.email}
               </a>
             </div>
           </div>
