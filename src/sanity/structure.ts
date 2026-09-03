@@ -20,7 +20,20 @@ export const structure: StructureResolver = (S) =>
         .title("Country Pages")
         .schemaType("countryOverride")
         .child(S.documentTypeList("countryOverride").title("Country Pages")),
+      S.listItem()
+        .title("Intake Pages")
+        .schemaType("intakePage")
+        .child(S.documentTypeList("intakePage").title("Intake Pages")),
       S.divider(),
+      S.listItem()
+        .title("Site Settings")
+        .schemaType("siteSettings")
+        .child(
+          S.document()
+            .schemaType("siteSettings")
+            .documentId("siteSettings")
+            .title("Site Settings"),
+        ),
       S.listItem()
         .title("Enquiry Leads")
         .schemaType("lead")

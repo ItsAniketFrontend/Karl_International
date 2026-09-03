@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { IntakePage } from "@/components/sections/IntakePage";
 import { destinations } from "@/lib/data";
 import { countryContent } from "@/lib/content";
+import { getMergedIntake } from "@/sanity/intake";
 
 type Params = { country: string; intake: string };
 
@@ -14,11 +15,13 @@ export function generateStaticParams(): Params[] {
   });
 }
 
-function resolve(country: string, intakeSlug: string) {
+async function resolve(country: string, intakeSlug: string) {
   const dest = destinations.find((d) => d.slug === country);
   const content = dest ? countryContent[dest.slug] : undefined;
   const intake = content?.intakes.find((i) => i.slug === intakeSlug);
-  return { dest, intake };
+  if (!dest || !intake) return { dest, intake: undefined };
+  const merged = await getMergedIntake(dest.slug, intakeSlug, intake);
+  return { dest, intake: merged };
 }
 
 export async function generateMetadata({
@@ -27,7 +30,7 @@ export async function generateMetadata({
   params: Promise<Params>;
 }): Promise<Metadata> {
   const { country, intake: intakeSlug } = await params;
-  const { dest, intake } = resolve(country, intakeSlug);
+  const { dest, intake } = await resolve(country, intakeSlug);
   if (!dest || !intake) return {};
   return {
     title: `${intake.name} in ${dest.name} | Complete Guide for Indian Students — Karl Konsult`,
@@ -45,7 +48,7 @@ export default async function CountryIntakePage({
   params: Promise<Params>;
 }) {
   const { country, intake: intakeSlug } = await params;
-  const { dest, intake } = resolve(country, intakeSlug);
+  const { dest, intake } = await resolve(country, intakeSlug);
   if (!dest || !intake) notFound();
   return <IntakePage dest={dest} intake={intake} />;
 }

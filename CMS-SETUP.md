@@ -16,6 +16,8 @@ to the built-in sample posts** — so nothing ever breaks during setup.
 | **News / announcements** | `/studio` → News & Updates | `/news`, navbar → News |
 | **Enquiry leads** | `/studio` → Enquiry Leads (view only) | — (staff view submissions) |
 | **Country pages** | `/studio` → Country Pages | `/study-abroad/[country]` |
+| **Intake pages** | `/studio` → Intake Pages | `/study-abroad/[country]/[intake]` |
+| **Site-wide contact info & socials** | `/studio` → Site Settings | Sticky Call/WhatsApp buttons, footer, `/contact`, homepage social links |
 
 ---
 
@@ -35,11 +37,66 @@ content, so you can override just one figure (say, updated UK tuition) and leave
 the rest alone. A country with no override document shows the default content.
 
 The **deep nested structures** (application timelines, comparison tables, the
-full course grids, the per-intake landing pages) stay in code by design — this
-covers the text/list content that actually changes year to year. If you later
-need those editable too, that's a follow-up.
+full course grids) stay in code on this page by design — this covers the
+text/list content that actually changes year to year. The per-intake landing
+pages themselves are fully editable — see the next section.
 
 Changes appear on the live page within ~60 seconds (ISR).
+
+---
+
+## Intake pages (Phase 4)
+
+Staff can now edit the **entire** per-intake landing page — the deep pages at
+`/study-abroad/[country]/[intake]` (e.g. "September Intake" for the UK) — from
+the CMS. In `/studio` → **Intake Pages** → **＋ Create**, pick a country and
+enter the intake's slug (must match the URL, e.g.
+`september-intake-2027`), then fill in any of:
+
+- Name, season, months, status, summary (the intake-card fields)
+- Intro paragraphs and the "what is this intake?" paragraphs
+- Why choose this intake
+- Application timeline
+- Deadlines
+- Course categories
+- Universities
+- Eligibility (undergraduate / postgraduate blocks)
+- English tests, documents
+- How-to-apply steps
+- Scholarships
+- Comparison table (vs the country's main intake) and its label
+- Verdict paragraphs
+- FAQs
+
+**Every field is optional.** Anything left blank falls back to the built-in
+content in `src/lib/content/*.ts`, so a partly-filled document — or none at
+all — never breaks the page. Use **Import existing intake pages** below to
+pre-populate every intake from the current code content so staff start from
+real, editable text instead of a blank form.
+
+Changes appear on the live page within ~60 seconds (ISR).
+
+---
+
+## Site settings (Phase 5)
+
+Phone number, WhatsApp number, email, office address, office hours and social
+media links are editable from `/studio` → **Site Settings** — a single
+document (there's only ever one). It drives:
+
+- The sticky Call / WhatsApp buttons shown on every page
+- The footer's address, phone, email and social icons
+- The `/contact` page's call/WhatsApp/email cards and office info
+- The homepage social links section
+
+**Every field is optional.** Anything left blank falls back to the current
+defaults (the values the site shipped with), so filling in just the phone
+number, for example, leaves everything else untouched. Phone/WhatsApp have two
+fields each: a **display** version (e.g. "+91 97723 00000") and a **dial**
+version used in `tel:`/`wa.me` links (e.g. "+919772300000" / "919772300000" —
+digits and `+` only, no spaces).
+
+Changes appear on the live site within ~60 seconds (ISR).
 
 ---
 
@@ -119,6 +176,30 @@ CMS**, import them once:
    are stock URLs) — upload a cover per post in the Studio, or they use a default image.
 
 Once posts exist in Sanity, the site reads those instead of the fallback automatically.
+
+---
+
+## Import existing intake pages (optional, one-time)
+
+The site already shows the full intake landing pages via the built-in content
+in `src/lib/content/*.ts`. To make them **editable in the CMS** (pre-filled
+with the current live text instead of blank documents), import them once:
+
+1. Create an **Editor token**: sanity.io/manage → project → **API → Tokens → Add token**
+   (Editor role). Copy it.
+2. Paste it into `.env.local` as `SANITY_API_WRITE_TOKEN=...` (keep it secret; it's
+   gitignored).
+3. Run:
+   ```
+   npm run migrate:intakes
+   ```
+   This creates one Intake Page document per intake across all 9 countries (UK,
+   Australia, USA, Germany, France, Italy, New Zealand, Europe, China —
+   2-3 intakes each). Safe to re-run; it updates existing documents rather than
+   duplicating them.
+
+Once the documents exist in Sanity, the site merges any edited fields on top of
+the code content automatically — no redeploy needed.
 
 ---
 
