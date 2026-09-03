@@ -3,25 +3,54 @@
 import { Field, inputBase, SubmitButton } from "@/components/admin/form";
 import type { SiteSettingsDoc } from "@/app/admin/(dashboard)/settings/actions";
 import { saveSiteSettings } from "@/app/admin/(dashboard)/settings/actions";
+import { defaultSiteSettings } from "@/sanity/site-settings";
 
 export function SiteSettingsForm({ settings }: { settings: SiteSettingsDoc }) {
   return (
     <form action={saveSiteSettings} className="flex max-w-2xl flex-col gap-5">
+      <p className="-mt-1 text-xs text-pine-700/55">
+        Grayed-out text shows the value currently live on the site. Type in a field to override it.
+      </p>
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <Field label="Phone number" htmlFor="phone" hint='Displayed, e.g. "+91 97723 00000"'>
-          <input id="phone" name="phone" defaultValue={settings.phone || ""} className={inputBase} />
+          <input
+            id="phone"
+            name="phone"
+            defaultValue={settings.phone || ""}
+            placeholder={defaultSiteSettings.phone}
+            className={inputBase}
+          />
         </Field>
         <Field label="Phone (dial format)" htmlFor="phoneDial" hint="Digits + country code, e.g. +919772300000">
-          <input id="phoneDial" name="phoneDial" defaultValue={settings.phoneDial || ""} className={inputBase} />
+          <input
+            id="phoneDial"
+            name="phoneDial"
+            defaultValue={settings.phoneDial || ""}
+            placeholder={defaultSiteSettings.phoneDial}
+            className={inputBase}
+          />
         </Field>
       </div>
 
       <Field label="WhatsApp number (dial format)" htmlFor="whatsapp" hint="No plus sign, e.g. 919772300000">
-        <input id="whatsapp" name="whatsapp" defaultValue={settings.whatsapp || ""} className={inputBase} />
+        <input
+          id="whatsapp"
+          name="whatsapp"
+          defaultValue={settings.whatsapp || ""}
+          placeholder={defaultSiteSettings.whatsapp}
+          className={inputBase}
+        />
       </Field>
 
       <Field label="Email address" htmlFor="email">
-        <input id="email" name="email" type="email" defaultValue={settings.email || ""} className={inputBase} />
+        <input
+          id="email"
+          name="email"
+          type="email"
+          defaultValue={settings.email || ""}
+          placeholder={defaultSiteSettings.email}
+          className={inputBase}
+        />
       </Field>
 
       <Field label="Office address" htmlFor="address">
@@ -29,13 +58,20 @@ export function SiteSettingsForm({ settings }: { settings: SiteSettingsDoc }) {
           id="address"
           name="address"
           defaultValue={settings.address || ""}
+          placeholder={defaultSiteSettings.address}
           rows={2}
           className={`${inputBase} resize-y`}
         />
       </Field>
 
       <Field label="Office hours" htmlFor="officeHours" hint='e.g. "Mon to Sat · 10:00 AM to 7:00 PM"'>
-        <input id="officeHours" name="officeHours" defaultValue={settings.officeHours || ""} className={inputBase} />
+        <input
+          id="officeHours"
+          name="officeHours"
+          defaultValue={settings.officeHours || ""}
+          placeholder={defaultSiteSettings.officeHours}
+          className={inputBase}
+        />
       </Field>
 
       <h2 className="mt-2 font-bold text-pine-900">Social links</h2>

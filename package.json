@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "migrate:blog": "tsx scripts/migrate-blog.ts",
-    "migrate:intakes": "tsx scripts/migrate-intakes.ts"
+    "migrate:intakes": "tsx scripts/migrate-intakes.ts",
+    "migrate:countries": "tsx scripts/migrate-countries.ts"
   },
   "dependencies": {
     "@phosphor-icons/react": "^2.1.7",
