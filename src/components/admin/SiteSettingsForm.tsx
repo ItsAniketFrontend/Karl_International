@@ -28,6 +28,7 @@ export function SiteSettingsForm({ settings }: { settings: SiteSettingsDoc }) {
         currentAssetRef={settings.logoFooter?.asset?._ref}
         uploadAction={uploadSiteSettingsImage}
         previewClassName="h-16 w-40 !bg-pine-900"
+        emptyTextClassName="text-white/40"
       />
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
