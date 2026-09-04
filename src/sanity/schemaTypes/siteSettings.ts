@@ -12,6 +12,21 @@ export const siteSettings = defineType({
   type: "document",
   fields: [
     defineField({
+      name: "logo",
+      title: "Header logo",
+      type: "image",
+      description: "Shown in the site header. Leave blank to keep the built-in logo.",
+      options: { hotspot: true },
+    }),
+    defineField({
+      name: "logoFooter",
+      title: "Footer logo",
+      type: "image",
+      description:
+        "Shown in the footer (on a dark background — use a white/light version). Leave blank to keep the built-in logo.",
+      options: { hotspot: true },
+    }),
+    defineField({
       name: "phone",
       title: "Phone number",
       type: "string",

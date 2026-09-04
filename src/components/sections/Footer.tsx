@@ -86,7 +86,7 @@ export async function Footer() {
           {/* brand */}
           <div className="col-span-2 md:col-span-3 lg:col-span-1">
             <Image
-              src="/logo-white.png"
+              src={settings.logoFooterUrl || "/logo-white.png"}
               alt="Karl Konsult International"
               width={280}
               height={201}

@@ -1,5 +1,7 @@
 import { groq } from "next-sanity";
 import { client } from "./client";
+import { urlForImage } from "./image";
+import type { SanityImageSource } from "@sanity/image-url/lib/types/types";
 
 /**
  * Site-wide contact info + social links. Fetches the singleton `siteSettings`
@@ -10,6 +12,8 @@ import { client } from "./client";
  */
 
 export type SiteSettings = {
+  logoUrl?: string;
+  logoFooterUrl?: string;
   phone: string;
   phoneDial: string;
   whatsapp: string;
@@ -36,11 +40,14 @@ export const defaultSiteSettings: SiteSettings = {
   socialLinks: {},
 };
 
-type Override = Partial<Omit<SiteSettings, "socialLinks">> & {
+type Override = Partial<Omit<SiteSettings, "socialLinks" | "logoUrl" | "logoFooterUrl">> & {
   socialLinks?: SiteSettings["socialLinks"];
+  logo?: SanityImageSource | null;
+  logoFooter?: SanityImageSource | null;
 };
 
 const SETTINGS_QUERY = groq`*[_type == "siteSettings"][0]{
+  logo, logoFooter,
   phone, phoneDial, whatsapp, email, address, officeHours,
   socialLinks
 }`;
@@ -62,6 +69,8 @@ export async function getSiteSettings(): Promise<SiteSettings> {
   if (!o) return defaultSiteSettings;
 
   return {
+    logoUrl: o.logo ? urlForImage(o.logo).url() : undefined,
+    logoFooterUrl: o.logoFooter ? urlForImage(o.logoFooter).url() : undefined,
     phone: nonEmpty(o.phone) ? o.phone : defaultSiteSettings.phone,
     phoneDial: nonEmpty(o.phoneDial) ? o.phoneDial : defaultSiteSettings.phoneDial,
     whatsapp: nonEmpty(o.whatsapp) ? o.whatsapp : defaultSiteSettings.whatsapp,

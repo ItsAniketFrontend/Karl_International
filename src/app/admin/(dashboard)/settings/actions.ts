@@ -3,8 +3,12 @@
 import { revalidatePath } from "next/cache";
 import { writeClient } from "@/sanity/write-client";
 
+export type SiteSettingsImage = { asset?: { _ref: string } } | null;
+
 export type SiteSettingsDoc = {
   _id: string;
+  logo?: SiteSettingsImage;
+  logoFooter?: SiteSettingsImage;
   phone?: string;
   phoneDial?: string;
   whatsapp?: string;
@@ -26,7 +30,7 @@ const SETTINGS_ID = "siteSettings";
 export async function getOrCreateSiteSettings(): Promise<SiteSettingsDoc> {
   const existing = await writeClient.fetch<SiteSettingsDoc | null>(
     `*[_type == "siteSettings" && _id == $id][0]{
-      _id, phone, phoneDial, whatsapp, email, address, officeHours, socialLinks
+      _id, logo, logoFooter, phone, phoneDial, whatsapp, email, address, officeHours, socialLinks
     }`,
     { id: SETTINGS_ID },
   );
@@ -36,6 +40,15 @@ export async function getOrCreateSiteSettings(): Promise<SiteSettingsDoc> {
   return { _id: SETTINGS_ID };
 }
 
+export async function uploadSiteSettingsImage(formData: FormData) {
+  const file = formData.get("file") as File | null;
+  if (!file || file.size === 0) throw new Error("No file provided");
+  const asset = await writeClient.assets.upload("image", file, {
+    filename: file.name,
+  });
+  return { _type: "image" as const, asset: { _type: "reference" as const, _ref: asset._id } };
+}
+
 export async function saveSiteSettings(formData: FormData) {
   const phone = String(formData.get("phone") || "");
   const phoneDial = String(formData.get("phoneDial") || "");
@@ -43,6 +56,8 @@ export async function saveSiteSettings(formData: FormData) {
   const email = String(formData.get("email") || "");
   const address = String(formData.get("address") || "");
   const officeHours = String(formData.get("officeHours") || "");
+  const logoJson = String(formData.get("logoJson") || "");
+  const logoFooterJson = String(formData.get("logoFooterJson") || "");
 
   const socialLinks: Record<string, string> = {};
   for (const key of ["instagram", "facebook", "linkedin", "youtube", "whatsapp", "x"]) {
@@ -61,6 +76,8 @@ export async function saveSiteSettings(formData: FormData) {
   if (address) doc.address = address;
   if (officeHours) doc.officeHours = officeHours;
   if (Object.keys(socialLinks).length) doc.socialLinks = socialLinks;
+  if (logoJson) doc.logo = JSON.parse(logoJson);
+  if (logoFooterJson) doc.logoFooter = JSON.parse(logoFooterJson);
 
   await writeClient.createOrReplace(doc);
 

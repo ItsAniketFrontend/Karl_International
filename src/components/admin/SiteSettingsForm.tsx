@@ -1,8 +1,9 @@
 "use client";
 
 import { Field, inputBase, SubmitButton } from "@/components/admin/form";
+import { ImageField } from "@/components/admin/ImageField";
 import type { SiteSettingsDoc } from "@/app/admin/(dashboard)/settings/actions";
-import { saveSiteSettings } from "@/app/admin/(dashboard)/settings/actions";
+import { saveSiteSettings, uploadSiteSettingsImage } from "@/app/admin/(dashboard)/settings/actions";
 import { defaultSiteSettings } from "@/sanity/site-settings";
 
 export function SiteSettingsForm({ settings }: { settings: SiteSettingsDoc }) {
@@ -11,6 +12,24 @@ export function SiteSettingsForm({ settings }: { settings: SiteSettingsDoc }) {
       <p className="-mt-1 text-xs text-pine-700/55">
         Grayed-out text shows the value currently live on the site. Type in a field to override it.
       </p>
+
+      <h2 className="font-bold text-pine-900">Logo</h2>
+      <ImageField
+        label="Header logo"
+        hint="Shown in the site header. Leave unset to keep the built-in logo."
+        hiddenFieldName="logoJson"
+        currentAssetRef={settings.logo?.asset?._ref}
+        uploadAction={uploadSiteSettingsImage}
+      />
+      <ImageField
+        label="Footer logo"
+        hint="Shown in the footer on a dark background — use a white/light version. Leave unset to keep the built-in logo."
+        hiddenFieldName="logoFooterJson"
+        currentAssetRef={settings.logoFooter?.asset?._ref}
+        uploadAction={uploadSiteSettingsImage}
+        previewClassName="h-16 w-40 !bg-pine-900"
+      />
+
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <Field label="Phone number" htmlFor="phone" hint='Displayed, e.g. "+91 97723 00000"'>
           <input
