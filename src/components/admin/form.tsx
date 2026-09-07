@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
-import { Plus, Trash, CircleNotch } from "@phosphor-icons/react";
+import { useEffect, useState } from "react";
+import { useFormStatus } from "react-dom";
+import { Plus, Trash, CircleNotch, CheckCircle } from "@phosphor-icons/react";
 
 export const inputBase =
   "w-full rounded-xl border border-pine-700/20 bg-bone px-4 py-3 text-pine-900 placeholder:text-pine-700/45 focus:border-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-200";
@@ -60,12 +61,18 @@ export function Section({
   );
 }
 
+/**
+ * Submit button whose "pending" state comes from React's real form-submission
+ * lifecycle (useFormStatus), not local state -- local state has no way to
+ * know when a server action actually finishes (or throws), so it used to get
+ * stuck on the pending label forever on any action that doesn't navigate
+ * away or throws an error with no visible message.
+ */
 export function SubmitButton({ label, pendingLabel }: { label: string; pendingLabel: string }) {
-  const [pending, setPending] = useState(false);
+  const { pending } = useFormStatus();
   return (
     <button
       type="submit"
-      onClick={() => setPending(true)}
       disabled={pending}
       className="inline-flex items-center justify-center gap-2 rounded-full bg-emerald-600 px-6 py-3 font-semibold text-white transition-all hover:bg-emerald-700 active:scale-[0.98] disabled:opacity-70"
     >
@@ -73,6 +80,56 @@ export function SubmitButton({ label, pendingLabel }: { label: string; pendingLa
         <>
           <CircleNotch size={18} className="animate-spin" />
           {pendingLabel}
+        </>
+      ) : (
+        label
+      )}
+    </button>
+  );
+}
+
+/**
+ * Same as SubmitButton, but shows a brief "Saved" confirmation after a
+ * successful submit that doesn't navigate away (e.g. the Site Settings
+ * singleton, which stays on the same page after saving).
+ */
+export function SubmitButtonWithConfirm({
+  label,
+  pendingLabel,
+  savedLabel = "Saved",
+}: {
+  label: string;
+  pendingLabel: string;
+  savedLabel?: string;
+}) {
+  const { pending } = useFormStatus();
+  const [justSaved, setJustSaved] = useState(false);
+  const [wasPending, setWasPending] = useState(false);
+
+  useEffect(() => {
+    if (wasPending && !pending) {
+      setJustSaved(true);
+      const t = setTimeout(() => setJustSaved(false), 2500);
+      return () => clearTimeout(t);
+    }
+    setWasPending(pending);
+  }, [pending, wasPending]);
+
+  return (
+    <button
+      type="submit"
+      disabled={pending}
+      className="inline-flex items-center justify-center gap-2 rounded-full bg-emerald-600 px-6 py-3 font-semibold text-white transition-all hover:bg-emerald-700 active:scale-[0.98] disabled:opacity-70"
+    >
+      {pending ? (
+        <>
+          <CircleNotch size={18} className="animate-spin" />
+          {pendingLabel}
+        </>
+      ) : justSaved ? (
+        <>
+          <CheckCircle size={18} weight="fill" />
+          {savedLabel}
         </>
       ) : (
         label

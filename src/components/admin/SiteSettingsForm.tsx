@@ -1,6 +1,6 @@
 "use client";
 
-import { Field, inputBase, SubmitButton } from "@/components/admin/form";
+import { Field, inputBase, SubmitButtonWithConfirm } from "@/components/admin/form";
 import { ImageField } from "@/components/admin/ImageField";
 import type { SiteSettingsDoc } from "@/app/admin/(dashboard)/settings/actions";
 import { saveSiteSettings, uploadSiteSettingsImage } from "@/app/admin/(dashboard)/settings/actions";
@@ -157,7 +157,7 @@ export function SiteSettingsForm({ settings }: { settings: SiteSettingsDoc }) {
       </div>
 
       <div>
-        <SubmitButton label="Save settings" pendingLabel="Saving…" />
+        <SubmitButtonWithConfirm label="Save settings" pendingLabel="Saving…" />
       </div>
     </form>
   );
