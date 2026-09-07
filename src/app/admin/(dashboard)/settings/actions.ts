@@ -49,15 +49,32 @@ export async function uploadSiteSettingsImage(formData: FormData) {
   return { _type: "image" as const, asset: { _type: "reference" as const, _ref: asset._id } };
 }
 
+/** Keeps a leading "+" if present, strips everything else that isn't a digit. */
+function toDialFormat(raw: string): string {
+  const hasPlus = raw.trim().startsWith("+");
+  const digits = raw.replace(/\D/g, "");
+  return digits ? (hasPlus ? `+${digits}` : digits) : "";
+}
+
+/** wa.me links need digits only, no leading "+". */
+function toWhatsappFormat(raw: string): string {
+  return raw.replace(/\D/g, "");
+}
+
 export async function saveSiteSettings(formData: FormData) {
   const phone = String(formData.get("phone") || "");
-  const phoneDial = String(formData.get("phoneDial") || "");
-  const whatsapp = String(formData.get("whatsapp") || "");
+  const phoneDialInput = String(formData.get("phoneDial") || "");
+  const whatsappInput = String(formData.get("whatsapp") || "");
   const email = String(formData.get("email") || "");
   const address = String(formData.get("address") || "");
   const officeHours = String(formData.get("officeHours") || "");
   const logoJson = String(formData.get("logoJson") || "");
   const logoFooterJson = String(formData.get("logoFooterJson") || "");
+
+  // If the dial-format fields are left blank, derive them from the main
+  // phone field so staff only have to type the number once.
+  const phoneDial = phoneDialInput ? toDialFormat(phoneDialInput) : toDialFormat(phone);
+  const whatsapp = whatsappInput ? toWhatsappFormat(whatsappInput) : toWhatsappFormat(phone);
 
   const socialLinks: Record<string, string> = {};
   for (const key of ["instagram", "facebook", "linkedin", "youtube", "whatsapp", "x"]) {
@@ -82,4 +99,5 @@ export async function saveSiteSettings(formData: FormData) {
   await writeClient.createOrReplace(doc);
 
   revalidatePath("/", "layout");
+  revalidatePath("/contact");
 }

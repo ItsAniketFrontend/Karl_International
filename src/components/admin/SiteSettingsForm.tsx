@@ -31,36 +31,45 @@ export function SiteSettingsForm({ settings }: { settings: SiteSettingsDoc }) {
         emptyTextClassName="text-white/40"
       />
 
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        <Field label="Phone number" htmlFor="phone" hint='Displayed, e.g. "+91 97723 00000"'>
-          <input
-            id="phone"
-            name="phone"
-            defaultValue={settings.phone || ""}
-            placeholder={defaultSiteSettings.phone}
-            className={inputBase}
-          />
-        </Field>
-        <Field label="Phone (dial format)" htmlFor="phoneDial" hint="Digits + country code, e.g. +919772300000">
-          <input
-            id="phoneDial"
-            name="phoneDial"
-            defaultValue={settings.phoneDial || ""}
-            placeholder={defaultSiteSettings.phoneDial}
-            className={inputBase}
-          />
-        </Field>
-      </div>
-
-      <Field label="WhatsApp number (dial format)" htmlFor="whatsapp" hint="No plus sign, e.g. 919772300000">
+      <Field label="Phone number" htmlFor="phone" hint='e.g. "+91 97723 00000" — used for both the displayed number and the call/WhatsApp links'>
         <input
-          id="whatsapp"
-          name="whatsapp"
-          defaultValue={settings.whatsapp || ""}
-          placeholder={defaultSiteSettings.whatsapp}
+          id="phone"
+          name="phone"
+          defaultValue={settings.phone || ""}
+          placeholder={defaultSiteSettings.phone}
           className={inputBase}
         />
       </Field>
+
+      <details className="rounded-xl border border-pine-700/15 bg-bone/60 px-4 py-3">
+        <summary className="cursor-pointer text-sm font-semibold text-pine-700">
+          Advanced: override the call/WhatsApp link formats
+        </summary>
+        <p className="mt-2 text-xs text-pine-700/55">
+          Normally left blank — the phone number above is used to build these automatically.
+          Only fill these in if the call or WhatsApp link needs a different number than what&apos;s displayed.
+        </p>
+        <div className="mt-3 grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <Field label="Phone (dial format)" htmlFor="phoneDial" hint="Digits + country code, e.g. +919772300000">
+            <input
+              id="phoneDial"
+              name="phoneDial"
+              defaultValue={settings.phoneDial || ""}
+              placeholder={defaultSiteSettings.phoneDial}
+              className={inputBase}
+            />
+          </Field>
+          <Field label="WhatsApp number (dial format)" htmlFor="whatsapp" hint="Digits only, e.g. 919772300000">
+            <input
+              id="whatsapp"
+              name="whatsapp"
+              defaultValue={settings.whatsapp || ""}
+              placeholder={defaultSiteSettings.whatsapp}
+              className={inputBase}
+            />
+          </Field>
+        </div>
+      </details>
 
       <Field label="Email address" htmlFor="email">
         <input
